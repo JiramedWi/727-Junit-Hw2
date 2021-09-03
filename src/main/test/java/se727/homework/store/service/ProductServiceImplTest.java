@@ -22,11 +22,7 @@ import static org.mockito.Mockito.*;
 
 class ProductServiceImplTest {
     ProductDao productDao = null;
-    TransactionDao transactionDao = null;
-    Product product1 = null;
-    Product product2 = null;
 
-    List<Product> products = new ArrayList<>();
 
     @BeforeEach
     void init() {
