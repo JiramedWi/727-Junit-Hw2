@@ -9,6 +9,11 @@ import java.util.stream.Collectors;
 
 public class TransactionServiceImpl implements TransactionService{
     TransactionDao transactionDao;
+
+    public void setTransactionDao(TransactionDao transactionDao) {
+        this.transactionDao = transactionDao;
+    }
+
     @Override
     public Double getAverageTransactionSellPriceByCustomerName(String customerName) {
         return transactionDao.getAllTransaction().stream().filter(
