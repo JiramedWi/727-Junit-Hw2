@@ -10,10 +10,6 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService{
     ProductDao productDao;
 
-    public ProductDao getProductDao() {
-        return productDao;
-    }
-
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
     }
