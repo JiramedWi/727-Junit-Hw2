@@ -32,23 +32,26 @@ class ProductServiceImplTest {
     void init() {
         //set ProductDao as mock
         productDao = mock(ProductDao.class);
-        //Create list for product in stock
+        //Creat mock for test name
         when(productDao.getAllProductByPartialName("Sock")).thenReturn(
                 Arrays.asList(
                         new Product("Sock", 100.0),
                         new Product("HSock", 230.0))
         );
         when(productDao.getAllProductByPartialName("HSock")).thenReturn(
-                Arrays.asList(new Product("HSock", 230.0))
+                Arrays.asList(
+                        new Product("HSock", 230.0))
         );
         when(productDao.getAllProductByPartialName("SSock")).thenReturn(
                 Arrays.asList()
         );
+        //Creat mock for test price
         when(productDao.getAllProduct()).thenReturn(
-                Arrays.asList(new Product("sPant",10.0),
-                        new Product("mPant",20.0),
-                        new Product("lPant",30.0),
-                        new Product("xlPant",40.0))
+                Arrays.asList(
+                        new Product("sPant", 10.0),
+                        new Product("mPant", 20.0),
+                        new Product("lPant", 30.0),
+                        new Product("xlPant", 40.0))
         );
 
 
@@ -58,12 +61,18 @@ class ProductServiceImplTest {
     void getProductByPartialName() {
         ProductServiceImpl productService = new ProductServiceImpl();
         productService.setProductDao(productDao);
+        //test size of list
         assertThat(productService.getProductByPartialName("Sock").size(), is(2));
+        //test get partialName some text
         assertThat(productService.getProductByPartialName("Sock"),
-                containsInAnyOrder(new Product("Sock", 100.0),
+                containsInAnyOrder(
+                        new Product("Sock", 100.0),
                         new Product("HSock", 230.0)));
+        //test get partialName specific text
         assertThat(productService.getProductByPartialName("HSock"),
-                containsInAnyOrder(new Product("HSock", 230.00)));
+                containsInAnyOrder(
+                        new Product("HSock", 230.00)));
+        //test throws exception for empty list
         Assertions.assertThrows(NoProductException.class, () -> {
             productService.getProductByPartialName("SSock");
         });
@@ -81,24 +90,32 @@ class ProductServiceImplTest {
     void getProductByPriceLessThan() {
         ProductServiceImpl productService = new ProductServiceImpl();
         productService.setProductDao(productDao);
-        assertThat(productService.getProductByPriceLessThan(30.0).size(),is(2));
+        //test size of list lessthan 30
+        assertThat(productService.getProductByPriceLessThan(30.0).size(), is(2));
+        //test product lessthan 30
         assertThat(productService.getProductByPriceLessThan(30.0),
                 containsInAnyOrder(
-                        new Product("sPant",10.0),
-                        new Product("mPant",20.0)
+                        new Product("sPant", 10.0),
+                        new Product("mPant", 20.0)
                 ));
-        assertThat(productService.getProductByPriceLessThan(40.0).size(),is(3));
+        //test size of list lessthan 40
+        assertThat(productService.getProductByPriceLessThan(40.0).size(), is(3));
+        //test product lessthan 40
         assertThat(productService.getProductByPriceLessThan(40.0),
                 containsInAnyOrder(
-                        new Product("sPant",10.0),
-                        new Product("mPant",20.0),
-                        new Product("lPant",30.0)
+                        new Product("sPant", 10.0),
+                        new Product("mPant", 20.0),
+                        new Product("lPant", 30.0)
                 ));
+        //test thrown exception for empty list
+        Assertions.assertThrows(NoProductException.class, () -> {
+            productService.getProductByPriceLessThan(5.0);
+        });
 
         //verify how many time to call getAllProduct function
-        verify(productDao,times(4)).getAllProduct();
+        verify(productDao, times(5)).getAllProduct();
         //verify the order of function that using in the test
         InOrder inOrder = inOrder(productDao);
-        inOrder.verify(productDao,times(4)).getAllProduct();
+        inOrder.verify(productDao, times(5)).getAllProduct();
     }
 }
