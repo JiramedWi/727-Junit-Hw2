@@ -15,18 +15,25 @@ public class Product {
     public Product() {
     }
 
+    public Product(String productId, String productName, Double standardPrice) {
+        this.productId = productId;
+        this.productName = productName;
+        StandardPrice = standardPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return productName.equals(product.productName) &&
-                StandardPrice.equals(product.StandardPrice);
+        return Objects.equals(productId, product.productId) &&
+                Objects.equals(productName, product.productName) &&
+                Objects.equals(StandardPrice, product.StandardPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productName, StandardPrice);
+        return Objects.hash(productId, productName, StandardPrice);
     }
 
     public String getProductId() {
